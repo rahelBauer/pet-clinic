@@ -4,7 +4,7 @@ env:
 #### An dieser Stelle müssen eure persönlichen Umgebungsvariablen eingetragen werden
   # Tipp: Die Token/der API-Key werden als Secrets in den Repository-Settings eingetragen und hier referenziert.
   # Tipp: Für mvn package muss -Dcheckstyle.skip=true angehängt werden, da die Unternehmens-pptx nen http aufruf in der metadata hat
-  GITHUB_ACCESSTOKEN: ${{ secrets.GITHUB_ACCESSTOKEN }}
+  GITHUB_ACCESSTOKEN: ${{ secrets.ACCESSTOKEN_PET }}
 jobs:
   compile:
     name: Compile
@@ -22,3 +22,7 @@ jobs:
       run: |
         #### AUFGABE COMPILE, DOCKER BUILD UND PUSH
           # hier ist Platz für maven package und docker build
+        mvn clean package
+        docker login ghcr.io -u rahelbauer -p $GITHUB_ACCESSTOKEN
+        docker build -t ghcr.io/rahelbauer/pet-clinic:latest .
+        docker push ghcr.io/rahelbauer/pet-clinic:latest
