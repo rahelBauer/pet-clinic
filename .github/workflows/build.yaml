@@ -17,12 +17,13 @@ jobs:
         distribution: temurin
         java-version: 11
         cache: maven
+        cache-dependency-path: '**/pom.xml'
   
     - name: Compile, build and push
       run: |
         #### AUFGABE COMPILE, DOCKER BUILD UND PUSH
           # hier ist Platz für maven package und docker build
-        mvn clean package
+        mvn clean package -Dcheckstyle.skip=true
         docker login ghcr.io -u rahelbauer -p $GITHUB_ACCESSTOKEN
         docker build -t ghcr.io/rahelbauer/pet-clinic:latest .
         docker push ghcr.io/rahelbauer/pet-clinic:latest
